@@ -36,12 +36,12 @@ export const UsersAPI = {
 }
 export const AuthAPI = {
     AuthMe() {
-        return instance.get('https://social-network.samuraijs.com/api/1.0/auth/me')
+        return instance.get('auth/me')
     },
     LoginMe(email, password, rememberMe) {
-        return instance.post('https://social-network.samuraijs.com/api/1.0/auth/login', {email, password, rememberMe, captcha: true})
+        return instance.post('auth/login', {email, password, rememberMe, captcha: true})
     },
     LogOut() {
-        return instance.delete('https://social-network.samuraijs.com/api/1.0/auth/login')
+        return instance.delete('auth/login')
     }
 }
