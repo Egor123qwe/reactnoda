@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <Provider store={store}>
         <App state = {store.getState()} dispatch={store.dispatch.bind(store)}/>
       </Provider>
