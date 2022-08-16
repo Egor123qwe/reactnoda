@@ -1,0 +1,8 @@
+.profile {
+    background-color: rgb(221, 176, 246);
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    padding: 20px;
+}

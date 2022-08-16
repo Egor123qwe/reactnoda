@@ -1,0 +1,10 @@
+.item {
+    padding: 10px;
+    color:aliceblue;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+}
+.item img {
+    border-radius: 50%;
+    width: 30px;
+}

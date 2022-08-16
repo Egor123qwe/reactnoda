@@ -1,0 +1,23 @@
+.UsersPage {
+    background-color: rgb(221, 176, 246);
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    padding: 20px;
+}
+
+.Page {
+    color: aliceblue;
+    text-decoration: none;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    padding: 5px;
+}
+.ChoosingPage {
+    color: rgb(183, 47, 210);
+    text-decoration: none;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    padding: 5px;
+}
