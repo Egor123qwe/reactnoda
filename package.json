@@ -1,7 +1,7 @@
 {
   "name": "reactnoda",
   "version": "0.1.0",
-  "homepage": "https://egor123qwe.github.io/ReactDevTest/",
+  "homepage": "https://egor123qwe.github.io/reactnoda/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
