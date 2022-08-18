@@ -48,7 +48,8 @@ let initialState = {
         status: '',
         description: '',
         ProfilePhoto: '',
-        SetPreloader: false
+        ImageFile: null,
+        SetPreloader: false,
     },
     MyUserId: '13865',
     UserId: '2'
@@ -66,7 +67,7 @@ let ProfileReducer = (state = initialState, action) => {
             case SETPRELOADER:
                 return {...state, ProfileInfoData: {...state.ProfileInfoData, Preloader: state.ProfileInfoData.Preloader ? false : true }  }
             case SETPROFILEIMAGE:
-                return {...state}//{...state, UsersData: [ ...action.UsersData]}
+                return {...state, ProfileInfoData: {...state.ProfileInfoData, ProfilePhoto: action.photos.large }  }
             case SETUSERID:
                 return {
                     ...state, 
@@ -129,7 +130,8 @@ export let UpdateStatus = (status) => {
 export let SetProfileImageThunk = (file) => {
     return ( (dispatch) => {
         ProfileAPI.SetImage(file).then(response => {
-            console.log(response)
+            console.log(response.data.data)
+            dispatch(SetProfileImage(response.data.data))
         })
     })
 }

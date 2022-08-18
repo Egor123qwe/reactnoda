@@ -29,7 +29,7 @@ function MapStateToProps(state) {
     return {
         ProfileInfoData: state.ProfilePage.ProfileInfoData,
         MyId: state.Auth.Auth.id,
-        UrlId: state.Url.UserIdInURL.id
+        UrlId: state.Url.UserIdInURL.id,
     }
 }
 

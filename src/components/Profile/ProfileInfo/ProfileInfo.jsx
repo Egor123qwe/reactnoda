@@ -9,7 +9,8 @@ function ProfileInfo(props) {
         <div className={s.ProfileInfo}>
             <div className={s.info}>
                 {props.ProfileInfoData.Preloader ? <Preloader/> : <></>}
-                <ProfileImage SetProfileImageThunk={props.SetProfileImageThunk} ProfilePhoto={props.ProfileInfoData.ProfilePhoto}/>
+                <ProfileImage SetProfileImageThunk={props.SetProfileImageThunk} 
+                              ProfilePhoto={props.ProfileInfoData.ProfilePhoto}/>
                 <div className={s.NikName}>{props.ProfileInfoData.fullName}</div>
                 <Status MyId={props.MyId} UserId={props.UserId} UpdateStatus={props.UpdateStatus} status={props.ProfileInfoData.status} />
                 <div className={s.description}>{props.ProfileInfoData.description}</div>
