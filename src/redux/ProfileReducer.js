@@ -130,8 +130,8 @@ export let UpdateStatus = (status) => {
 export let SetProfileImageThunk = (file) => {
     return ( (dispatch) => {
         ProfileAPI.SetImage(file).then(response => {
-            console.log(response.data.data)
-            dispatch(SetProfileImage(response.data.data))
+            console.log(response.data.data.photos.large)
+            dispatch(SetProfileImage(response.data.data.photos))
         })
     })
 }
