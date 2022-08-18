@@ -1,4 +1,5 @@
 import axios from "axios";
+import FormData from 'form-data'
 
 const instance = axios.create({
     withCredentials: true,
@@ -15,6 +16,16 @@ export const ProfileAPI = {
     },
     GetStatus(UserId) {
         return instance.get('/profile/status/'+ UserId)
+    },
+    SetImage(file) {
+        let data = new FormData();
+        data.append('file', file, file.name);
+        return instance.put('/profile/photo', data, 
+            {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }
+            })
     },
     UpdateStatus(status) {
         return instance.put('/profile/status' , { status: status })

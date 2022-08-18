@@ -5,9 +5,15 @@ const SETPROFILEINFO = 'SETPROFILEINFO'
 const SETUSERID = 'SETUSERID'
 const SETPRELOADER = 'SETPRELOADER';
 const SETSTAUS = 'SETSTAUS';
+const SETPROFILEIMAGE = 'SETPROFILEIMAGE';
 
 export const AddPost = (Post) => {
     let action = {type: ADDPOST, Post}
+    return action
+}
+
+export let SetProfileImage = (photos) => {
+    let action = {type: SETPROFILEIMAGE, photos}
     return action
 }
 
@@ -59,6 +65,8 @@ let ProfileReducer = (state = initialState, action) => {
                 }
             case SETPRELOADER:
                 return {...state, ProfileInfoData: {...state.ProfileInfoData, Preloader: state.ProfileInfoData.Preloader ? false : true }  }
+            case SETPROFILEIMAGE:
+                return {...state}//{...state, UsersData: [ ...action.UsersData]}
             case SETUSERID:
                 return {
                     ...state, 
@@ -115,6 +123,14 @@ export let UpdateStatus = (status) => {
                     dispatch(SetStatus(status))
                 }
             })
+    })
+}
+
+export let SetProfileImageThunk = (file) => {
+    return ( (dispatch) => {
+        ProfileAPI.SetImage(file).then(response => {
+            console.log(response)
+        })
     })
 }
 
