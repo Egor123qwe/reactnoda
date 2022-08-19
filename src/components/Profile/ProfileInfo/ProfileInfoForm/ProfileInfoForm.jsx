@@ -47,37 +47,58 @@ function ProfileInfoForm(props) {
     return (
             <form className={s.LoginForm} onSubmit={formik.handleSubmit}>
                 <div className={s.info}>
+                    <div className={s.ProfileInfoDescItem}>----------------------------------</div>
                     {!EditMode ? <button type="button" onClick={ OnEnableMode }>Edit</button> : <></>}
                     {EditMode ? <button type="submit">Save</button> : <></>}
 
                     { EditMode ? 
                         <div><span className={s.ProfileInfoDescItem}>Name: <input id='FullName' type="FullName" onChange={formik.handleChange} value={formik.values.FullName}/></span></div> : 
-                        <div className={s.NikName}>{props.ProfileInfoData.FullName}</div>}
+                        <div className={s.FullName}><span>{formik.values.FullName}</span></div>}
 
                     <Status MyId={props.MyId} UserId={props.UserId} UpdateStatus={props.UpdateStatus} status={props.ProfileInfoData.status} />
 
-                    { EditMode ? 
-                        <div><span className={s.ProfileInfoDescItem}>looking for a job: <input id='lookingForAJob' type="checkbox" onChange={formik.handleChange} value={formik.values.lookingForAJob}/></span></div> : 
-                        <div><span className={s.ProfileInfoDescItem}>looking for a job: {formik.values.lookingForAJob ? 'yes' : 'no' }</span></div>}
+                    <div className={s.ProfileInfoDescItem}>----------------------------------</div>
 
-                    { EditMode ? 
-                        <div><span>looking for a job description: <input id='LookingForAJobDescription' type="LookingForAJobDescription" onChange={formik.handleChange} value={formik.values.LookingForAJobDescription}/></span></div> : 
-                        <div><span className={s.ProfileInfoDescItem}>looking for a job description: {formik.values.LookingForAJobDescription}</span></div>}
+                    <div>
+                        <span className={s.ProfileInfoDescItem}>looking for a job: { 
+                            EditMode ? <input id='lookingForAJob' type="checkbox" onChange={formik.handleChange} value={formik.values.lookingForAJob}/> : 
+                                       <span className={s.ProfileInfoItem}>{formik.values.lookingForAJob ? 'yes' : 'no' }</span>
+                        }</span>
+                    </div>
 
-                    { EditMode ? 
-                        <div><span>About me: <input id='AboutMe' type="AboutMe" onChange={formik.handleChange} value={formik.values.AboutMe}/></span></div> : 
-                        <div><span className={s.ProfileInfoDescItem}> About me:{formik.values.AboutMe}</span></div>}
+                    <div>
+                        <span className={s.ProfileInfoDescItem}>looking for a job description: { 
+                            EditMode ? <input id='LookingForAJobDescription' type="LookingForAJobDescription" onChange={formik.handleChange} value={formik.values.LookingForAJobDescription}/> : 
+                                       <span className={s.ProfileInfoItem}>{formik.values.LookingForAJobDescription}</span>
+                        }</span>
+                    </div>
+
+                    <div>
+                        <span className={s.ProfileInfoDescItem}>About me: { 
+                            EditMode ? <input id='AboutMe' type="AboutMe" onChange={formik.handleChange} value={formik.values.AboutMe}/> : 
+                                       <span className={s.ProfileInfoItem}>{formik.values.AboutMe}</span>
+                        }</span>
+                    </div>
+
+                    <div className={s.ProfileInfoDescItem}>----------------------------------</div>
 
                     <div className={s.Contacts}>Contacts: 
+
                         <div>
-                            { EditMode ? 
-                                <div><span>Vk: <input id='contacts.vk' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.vk}/></span></div> : 
-                                <div><span className={s.ProfileInfoDescItem}>Vk: {formik.values.contacts.vk}</span></div>}
-                            { EditMode ? 
-                                <div><span>Git Hub: <input id='contacts.github' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.github}/></span></div>  : 
-                                <div><span className={s.ProfileInfoDescItem}>Git Hub: {formik.values.contacts.github}</span></div>}
+                            <span className={s.ProfileInfoDescItem}>Vk: { 
+                                EditMode ? <input id='contacts.vk' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.vk}/> : 
+                                        <span className={s.ProfileInfoItem}>{formik.values.contacts.vk}</span>
+                            }</span>
+                        </div>
+
+                        <div>
+                            <span className={s.ProfileInfoDescItem}>Git Hub: { 
+                                EditMode ? <input id='contacts.github' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.github}/> : 
+                                        <span className={s.ProfileInfoItem}>{formik.values.contacts.github}</span>
+                            }</span>
                         </div>
                     </div>
+                    <div className={s.ProfileInfoDescItem}>----------------------------------</div>
 
                 </div>
             </form>

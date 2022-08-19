@@ -7,7 +7,7 @@
     width: 15%;
     border-radius: 50%;
 }
-.NikName {
+.FullName {
     color: deeppink;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 35px;
@@ -36,4 +36,9 @@
     color:aliceblue;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 25px;
+}
+.ProfileInfoItem {
+    color:deeppink;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
 }
