@@ -81,7 +81,7 @@ function ProfileInfoForm(props) {
 
                     { EditMode ? 
                         <div><span>About me: <input id='description' type="description" onChange={formik.handleChange} value={formik.values.description}/></span></div> : 
-                        <div>About me: <span className={s.description}></span></div>}
+                        <div>About me: <span className={s.description}>{props.ProfileInfoData.description}</span></div>}
 
                     <div>Contacts: 
                         <div>
