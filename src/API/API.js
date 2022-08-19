@@ -29,6 +29,9 @@ export const ProfileAPI = {
     },
     UpdateStatus(status) {
         return instance.put('/profile/status' , { status: status })
+    },
+    SetProfileInfo(data) {
+        return instance.put('/profile/' , data)
     }
 }
 

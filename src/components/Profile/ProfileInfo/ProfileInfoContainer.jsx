@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ProfileInfo from './ProfileInfo';
 import React from "react";
-import { GetUserThunk, GetStatus, UpdateStatus, SetProfileImageThunk } from '../../../redux/ProfileReducer';
+import { GetUserThunk, GetStatus, UpdateStatus, SetProfileImageThunk, SetProfileInfoThunk } from '../../../redux/ProfileReducer';
 import withRouter from '../../../HOC/withRouter';
 
 class ProfileInfoAPI extends React.Component {
@@ -21,7 +21,7 @@ class ProfileInfoAPI extends React.Component {
     render() {
         return (<ProfileInfo MyId={this.props.MyId} UserId={this.props.router.params.userId} 
                              UpdateStatus={this.props.UpdateStatus} ProfileInfoData={this.props.ProfileInfoData}
-                             SetProfileImageThunk={this.props.SetProfileImageThunk}/>)
+                             SetProfileImageThunk={this.props.SetProfileImageThunk} SetProfileInfoThunk={this.props.SetProfileInfoThunk}/>)
     }
 } 
 
@@ -33,6 +33,6 @@ function MapStateToProps(state) {
     }
 }
 
-let ProfileinfoContainer = connect(MapStateToProps, { GetUserThunk, GetStatus, UpdateStatus, SetProfileImageThunk })(withRouter(ProfileInfoAPI))
+let ProfileinfoContainer = connect(MapStateToProps, { GetUserThunk, GetStatus, UpdateStatus, SetProfileImageThunk, SetProfileInfoThunk })(withRouter(ProfileInfoAPI))
 
 export default ProfileinfoContainer

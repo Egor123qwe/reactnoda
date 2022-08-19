@@ -1,8 +1,8 @@
 import s from './ProfileInfo.module.css'
 import Preloader from '../../Common/Preloader/Preloader';
-import Status from './Status/StatuHook';
 import React from 'react';
 import ProfileImage from './UserImage/UserImage';
+import ProfileInfoForm from './ProfileInfoForm/ProfileInfoForm';
 
 function ProfileInfo(props) {
     return (
@@ -11,9 +11,8 @@ function ProfileInfo(props) {
                 {props.ProfileInfoData.Preloader ? <Preloader/> : <></>}
                 <ProfileImage MyId={props.MyId} UserId={props.UserId} SetProfileImageThunk={props.SetProfileImageThunk} 
                               ProfilePhoto={props.ProfileInfoData.ProfilePhoto}/>
-                <div className={s.NikName}>{props.ProfileInfoData.fullName}</div>
-                <Status MyId={props.MyId} UserId={props.UserId} UpdateStatus={props.UpdateStatus} status={props.ProfileInfoData.status} />
-                <div className={s.description}>{props.ProfileInfoData.description}</div>
+                <ProfileInfoForm SetProfileInfoThunk={props.SetProfileInfoThunk} ProfileInfoData={props.ProfileInfoData} 
+                                 MyId={props.MyId} UserId={props.UserId} UpdateStatus={props.UpdateStatus}/>
             </div>
         </div>
       );
