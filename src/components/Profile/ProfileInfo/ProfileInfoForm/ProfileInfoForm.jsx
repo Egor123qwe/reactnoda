@@ -3,18 +3,7 @@ import Status from '../Status/StatuHook';
 import React from 'react';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-
-const validate = values => {
-    const errors = {};
-
-    //let lengthEmailControl = lengthControl(40)
-    //if (lengthEmailControl(values.email)) { errors.email = lengthEmailControl(values.email) }
-  
-    //let lengthPasswordControl = lengthControl(15)
-    //if (lengthPasswordControl(values.Password)) { errors.Password = lengthPasswordControl(values.Password) }
-  
-    return errors;
-};
+import { useEffect } from 'react';
 
 function ProfileInfoForm(props) {
 
@@ -24,40 +13,36 @@ function ProfileInfoForm(props) {
         SetEditMode(true)
     }
 
+    let StateSkeleton = {
+        FullName: props.ProfileInfoData.FullName,
+        lookingForAJob: props.ProfileInfoData.lookingForAJob,
+        LookingForAJobDescription: props.ProfileInfoData.lookingForAJobDescription,
+        AboutMe: props.ProfileInfoData.AboutMe,
+        contacts: {
+            github: props.ProfileInfoData.contacts.github,
+            vk: props.ProfileInfoData.contacts.vk,
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: '',
+            youtube: '',
+            mainLink: '',
+        }
+    }
+
     const formik = useFormik({
-        initialValues: {
-            NikName: '',
-            lookingForAJob: false,
-            LookingForAJobDescription: '',
-            description: '',
-            Vk: '',
-            GitHub: ''
-        },
-        validate,
+        initialValues: StateSkeleton,
         onSubmit: (values) => {
             SetEditMode(false)
-
-            let data = {
-                userId: props.MyId,
-                lookingForAJob: values.lookingForAJob,
-                LookingForAJobDescription: values.LookingForAJobDescription,
-                FullName: values.NikName,
-                AboutMe: values.description,
-                contacts: {
-                    github: values.GitHub,
-                    vk: values.Vk,
-                    facebook: '',
-                    instagram: '',
-                    twitter: '',
-                    website: '',
-                    youtube: '',
-                    mainLink: '',
-                }
-            }
-
-            props.SetProfileInfoThunk(data)
+            props.SetProfileInfoThunk(values)
         },
     });
+
+    useEffect(() => {
+        formik.setFormikState({
+            values: StateSkeleton
+        })
+    }, [props.ProfileInfoData])
 
     return (
             <form className={s.LoginForm} onSubmit={formik.handleSubmit}>
@@ -66,31 +51,31 @@ function ProfileInfoForm(props) {
                     {EditMode ? <button type="submit">Save</button> : <></>}
 
                     { EditMode ? 
-                        <div><span>Name: <input id='NikName' type="NikName" onChange={formik.handleChange} value={formik.values.NikName}/></span></div> : 
-                        <div className={s.NikName}>{props.ProfileInfoData.fullName}</div>}
+                        <div><span className={s.ProfileInfoDescItem}>Name: <input id='FullName' type="FullName" onChange={formik.handleChange} value={formik.values.FullName}/></span></div> : 
+                        <div className={s.NikName}>{props.ProfileInfoData.FullName}</div>}
 
                     <Status MyId={props.MyId} UserId={props.UserId} UpdateStatus={props.UpdateStatus} status={props.ProfileInfoData.status} />
 
                     { EditMode ? 
-                        <div><span>looking for a job: <input id='lookingForAJob' type="checkbox" onChange={formik.handleChange} value={formik.values.lookingForAJob}/></span></div> : 
-                        <div>looking for a job: <span className={s.lookingForAJob}>{formik.values.lookingForAJob ? 'yes' : 'no' }</span></div>}
+                        <div><span className={s.ProfileInfoDescItem}>looking for a job: <input id='lookingForAJob' type="checkbox" onChange={formik.handleChange} value={formik.values.lookingForAJob}/></span></div> : 
+                        <div><span className={s.ProfileInfoDescItem}>looking for a job: {formik.values.lookingForAJob ? 'yes' : 'no' }</span></div>}
 
                     { EditMode ? 
                         <div><span>looking for a job description: <input id='LookingForAJobDescription' type="LookingForAJobDescription" onChange={formik.handleChange} value={formik.values.LookingForAJobDescription}/></span></div> : 
-                        <div>looking for a job description: <span className={s.LookingForAJobDescription}></span></div>}
+                        <div><span className={s.ProfileInfoDescItem}>looking for a job description: {formik.values.LookingForAJobDescription}</span></div>}
 
                     { EditMode ? 
-                        <div><span>About me: <input id='description' type="description" onChange={formik.handleChange} value={formik.values.description}/></span></div> : 
-                        <div>About me: <span className={s.description}>{props.ProfileInfoData.description}</span></div>}
+                        <div><span>About me: <input id='AboutMe' type="AboutMe" onChange={formik.handleChange} value={formik.values.AboutMe}/></span></div> : 
+                        <div><span className={s.ProfileInfoDescItem}> About me:{formik.values.AboutMe}</span></div>}
 
-                    <div>Contacts: 
+                    <div className={s.Contacts}>Contacts: 
                         <div>
                             { EditMode ? 
-                                <div><span>Vk: <input id='Vk' type="Contacts" onChange={formik.handleChange} value={formik.values.Vk}/></span></div> : 
-                                <div>Vk: <span className={s.VkLink}></span></div>}
+                                <div><span>Vk: <input id='contacts.vk' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.vk}/></span></div> : 
+                                <div><span className={s.ProfileInfoDescItem}>Vk: {formik.values.contacts.vk}</span></div>}
                             { EditMode ? 
-                                <div><span>Git Hub: <input id='GitHub' type="Contacts" onChange={formik.handleChange} value={formik.values.GitHub}/></span></div>  : 
-                                <div>Git Hub: <span className={s.GitHubLink}></span></div>}
+                                <div><span>Git Hub: <input id='contacts.github' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.github}/></span></div>  : 
+                                <div><span className={s.ProfileInfoDescItem}>Git Hub: {formik.values.contacts.github}</span></div>}
                         </div>
                     </div>
 

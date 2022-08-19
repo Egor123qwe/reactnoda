@@ -44,12 +44,24 @@ let initialState = {
         {text : 'подписчики я вас люблю!', id: '2'},
         ],
     ProfileInfoData: {
-        fullName: '',
+        FullName: '',
         status: '',
-        description: '',
+        lookingForAJob: '',
+        lookingForAJobDescription: '',
+        AboutMe: '',
         ProfilePhoto: '',
         ImageFile: null,
         SetPreloader: false,
+        contacts: {
+            github:'',
+            vk: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: '',
+            youtube: '',
+            mainLink: '',
+        }
     },
     MyUserId: '13865',
     UserId: '2'
@@ -81,13 +93,20 @@ let ProfileReducer = (state = initialState, action) => {
                 }
             case SETPROFILEINFO: 
                 let photo = action.data.photos.large ? action.data.photos.large : 'https://i.pinimg.com/736x/18/ca/6f/18ca6f28ec97d6afb3117d4b6aece2e6.jpg'
+                console.log()
                 return {
                     ...state,
                     UserId: action.data.userId,
-                    ProfileInfoData: {  ...state.ProfileInfoData,  
-                                        fullName : action.data.fullName,
+                    ProfileInfoData: {  ...state.ProfileInfoData,
+                                        lookingForAJobDescription: action.data.lookingForAJobDescription,
+                                        lookingForAJob: action.data.lookingForAJob,
+                                        FullName : action.data.fullName,
                                         ProfilePhoto: photo,
-                                        description: action.data.aboutMe
+                                        AboutMe: action.data.aboutMe,
+                                        contacts: {...state.ProfileInfoData.contacts, 
+                                            github: action.data.contacts.github,
+                                            vk: action.data.contacts.vk,
+                                        }
                                     }
                 }
             default: 
