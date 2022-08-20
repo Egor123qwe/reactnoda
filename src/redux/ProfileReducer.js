@@ -154,10 +154,15 @@ export let SetProfileImageThunk = (file) => {
     })
 }
 
-export let SetProfileInfoThunk = (data) => {
+export let SetProfileInfoThunk = (data, UserId, setStatus) => {
     return ( (dispatch) => {
         ProfileAPI.SetProfileInfo(data).then(response => {
-            console.log(response)
+            if(response.data.resultCode === 0) {
+                dispatch(GetUserThunk(UserId))
+            }
+            else {
+                setStatus({error: response.data.messages[0]})
+            }
         })
     })
 }
