@@ -160,6 +160,7 @@ export let SetProfileInfoThunk = (data, UserId, setStatus) => {
             return new Promise((resolve) => {
                 if(response.data.resultCode === 0) {
                     dispatch(GetUserThunk(UserId))
+                    setStatus({error: null})
                 }
                 else {
                     setStatus({error: response.data.messages[0]})
