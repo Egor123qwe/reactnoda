@@ -25,11 +25,12 @@ const LoginForm = (props) => {
         initialValues: {
             email: '',
             Password: '',
-            isRemember: false
+            isRemember: false,
+            Captcha: ''
         },
         validate,
         onSubmit: (values, submitProps) => {
-            props.AuthLoginThunk(values.email, values.Password, values.isRemember, submitProps.setStatus)
+            props.AuthLoginThunk(values.email, values.Password, values.isRemember, values.Captcha, submitProps.setStatus)
         },
     });
 
@@ -46,18 +47,29 @@ const LoginForm = (props) => {
             <div className={s.title}>
                 Login
             </div>
-            <div className={s.email}>
+            <div className={s.item}>Nickname: 
                 <span className={formik.errors.email ? s.error : s.email}><input id='email' type="email" onChange={formik.handleChange} value={formik.values.email}/></span>
                 {formik.errors.email ? <div className={s.errorMessage}>{formik.errors.email}</div> : null}
             </div>
-            <div>
+
+            <div className={s.item}>Password:
                 <span className={formik.errors.Password ? s.error : s.Password}><input id='Password' type="Password" onChange={formik.handleChange} value={formik.values.Password}/></span>
                 {formik.errors.Password ? <div className={s.errorMessage}>{formik.errors.Password}</div> : null}
             </div>
-            <div className={s.rememberMe} >
+
+            <div className={s.item} >
                 <input id='isRemember' type="checkbox" onChange={formik.handleChange} value={formik.values.isRemember}/>
                 Remember Me
             </div>
+
+            { props.Captcha ?
+            <div>
+                <div className={s.item}>-----------------------------------------</div>
+                <div><img className={s.CaptchaImg} alt='' src={props.Captcha} /></div>
+                <span className={s.item} >Captcha: <input id='Captcha' type="Captcha" onChange={formik.handleChange} value={formik.values.Captcha}/></span>
+            </div> : <></> }
+
+            <div className={s.item}>-----------------------------------------</div>
             <button className={s.submitButton} type="submit">Log In</button>
             <div className={s.errorMessage}>{ MainError() }</div>
         </form>
@@ -67,7 +79,8 @@ const LoginForm = (props) => {
 let MapStateToProps = (state) => {
     return {
         isAuth: state.Auth.Auth.isAuth,
-        MyId: state.Auth.Auth.id
+        MyId: state.Auth.Auth.id,
+        Captcha: state.Auth.Auth.Captcha,
     }
 }
 

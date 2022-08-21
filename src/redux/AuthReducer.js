@@ -1,7 +1,8 @@
-import { AuthAPI } from '../API/API';
+import { AuthAPI, SecurityAPI } from '../API/API';
 
 const SETAUTH = 'SETAUTH'
 const DELETEAUTH = 'DELETEAUTH'
+const SETCAPTCHA = 'SETCAPTCHA'
 
 export let SetAuth = (data) => {
     let action = {type: SETAUTH, data: data}
@@ -13,13 +14,19 @@ export let DeleteAuth = () => {
     return action
 }
 
+export let SetCaptcha = (Url) => {
+    let action = {type: SETCAPTCHA, Url}
+    return action
+}
+
 let initialState = {
 
         Auth : {
             id: '',
             email: '',
             login: '',
-            isAuth: false
+            isAuth: false,
+            Captcha: ''
         }
 }
 
@@ -33,7 +40,12 @@ let DialogReducer = (state = initialState, action) => {
         case DELETEAUTH: 
             return {
                 ...state,
-                Auth : {...state.Auth, id: '', email: '', login: '', isAuth: false}
+                Auth : {...state.Auth, id: '', email: '', login: '', Captcha: '', isAuth: false}
+            }
+        case SETCAPTCHA: 
+            return {
+                ...state,
+                Auth : {...state.Auth, Captcha: action.Url}
             }
         default: 
             return state
@@ -51,15 +63,18 @@ export let AuthMeThunk = () => {
     })
 }
 
-export let AuthLoginThunk = (email, password, rememberMe, setStatus) => {
+export let AuthLoginThunk = (email, password, rememberMe, captcha, setStatus) => {
     return ( (dispatch) => {
-        AuthAPI.LoginMe(email, password, rememberMe)
+        AuthAPI.LoginMe(email, password, rememberMe, captcha)
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(AuthMeThunk())
             }
             else {
-                setStatus({error: 'Wrong login or password'})
+                if (response.data.resultCode === 10) {
+                    dispatch(GetCaptchaThunk())
+                }
+                setStatus({error: response.data.messages[0]})
             }
         })
     })
@@ -72,6 +87,15 @@ export let AuthLogOutThunk = () => {
             if (response.data.resultCode === 0) {
                 dispatch(DeleteAuth())
             }
+        })
+    })
+}
+
+let GetCaptchaThunk = () => {
+    return ( (dispatch) => {
+        SecurityAPI.GetCaptcha()
+        .then(response => {
+                dispatch(SetCaptcha(response.data.url))
         })
     })
 }

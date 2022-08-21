@@ -35,7 +35,7 @@ function ProfileInfoForm(props) {
 
         const errors = {};
     
-        let lengthMidleControl = lengthControl(25)
+        let lengthMidleControl = lengthControl(30)
         if (lengthMidleControl(values.FullName)) { errors.FullName = lengthMidleControl(values.FullName) }
         if (lengthMidleControl(values.LookingForAJobDescription)) { errors.LookingForAJobDescription = lengthMidleControl(values.LookingForAJobDescription) }
         if (lengthMidleControl(values.AboutMe)) { errors.AboutMe = lengthMidleControl(values.AboutMe) }
@@ -49,8 +49,11 @@ function ProfileInfoForm(props) {
         initialValues: StateSkeleton,
         validate,
         onSubmit: (values, submitProps) => {
-            props.SetProfileInfoThunk(values, props.UserId, submitProps.setStatus)
-            SetEditMode(false)
+            props.SetProfileInfoThunk(values, props.UserId, submitProps.setStatus).then((responce) => {
+                if (responce.data.resultCode === 0) {
+                    SetEditMode(false)
+                }
+            })
         },
     });
 
@@ -64,7 +67,8 @@ function ProfileInfoForm(props) {
             <form className={s.LoginForm} onSubmit={formik.handleSubmit}>
                 <div className={s.info}>
                     <div className={s.ProfileInfoDescItem}>----------------------------------</div>
-                    {!EditMode ? <button type="button" onClick={ OnEnableMode }>Edit</button> : <></>}
+
+                    {( (String(props.MyId) === props.UserId) && (!EditMode) ) ? <button type="button" onClick={ OnEnableMode }>Edit</button> : <></>}
                     {EditMode ? <button type="submit">Save</button> : <></>}
 
                     <div className={s.ProfileInfoDescItem}> { 
@@ -118,7 +122,7 @@ function ProfileInfoForm(props) {
                                                 <input id='contacts.vk' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.vk}/>
                                                 {formik.errors.vk ? <span className={s.errorMessage}> - {formik.errors.vk}</span> : null}
                                             </span> : 
-                                        <span className={s.ProfileInfoItem}>{formik.values.contacts.vk}</span>
+                                        <a href={formik.values.contacts.vk} rel="noopener noreferrer" target="_blank" className={s.ProfileInfoItem}>{formik.values.contacts.vk}</a>
                             }</span>
                         </div>
 
@@ -128,7 +132,7 @@ function ProfileInfoForm(props) {
                                                 <input id='contacts.github' type="Contacts" onChange={formik.handleChange} value={formik.values.contacts.github}/>
                                                 {formik.errors.github ? <span className={s.errorMessage}> - {formik.errors.github}</span> : null}
                                             </span> : 
-                                        <span className={s.ProfileInfoItem}>{formik.values.contacts.github}</span>
+                                        <a href={formik.values.contacts.github} rel="noopener noreferrer" target="_blank" className={s.ProfileInfoItem}>{formik.values.contacts.github}</a>
                             }</span>
                         </div>
                     </div>
