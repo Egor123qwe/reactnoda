@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -33,6 +33,7 @@ class AppMain extends React.Component {
           <NavbarContainer />
             <Suspense fallback={<div>Loading...</div>}>
               <Routes>
+                <Route path="/" element={<Navigate to="/profile" />} />
                 <Route path='/login' element={<Login />}/>
                 <Route path='profile/' element={<ProfileContainer />}/>
                 <Route path='profile/:userId' element={<ProfileContainer />}/>
@@ -41,6 +42,7 @@ class AppMain extends React.Component {
                 <Route path='/news' element={<News/>}/>
                 <Route path='/music' element={<Music/>}/>
                 <Route path='/settings' element={<Settings/>}/>
+                <Route path='*' element={<div>404 not found ):</div>}/>
               </Routes>
             </Suspense>
         </div>
