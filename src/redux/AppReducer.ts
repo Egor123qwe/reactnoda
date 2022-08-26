@@ -1,20 +1,21 @@
 import { AuthMeThunk } from "./AuthReducer"
 
-
 const INITIALIZING = 'INITIALIZING'
 
-export let SetInitializeStatus = () => {
-    let action = {type: INITIALIZING}
-    return action
-}
+
+type SetInitializeStatusAction = { type: typeof INITIALIZING }
+export let SetInitializeStatus = (): SetInitializeStatusAction => ({type: INITIALIZING})
+
+
+type initialStateType = typeof initialState
 
 let initialState = {
     initialize: {
-        isInitialazed: false
+        isInitialazed: false as boolean
     }
 }
 
-let AppReducer = (state = initialState, action) => {
+let AppReducer = (state = initialState, action: any): initialStateType => {
     switch(action.type) {
         case INITIALIZING: 
                 return {
@@ -27,7 +28,7 @@ let AppReducer = (state = initialState, action) => {
 }
 
 export let Initialize = () => {
-    return ( (dispatch) => {
+    return ( (dispatch: any) => {
         let promise = dispatch(AuthMeThunk())
         promise.then(() => {
             dispatch(SetInitializeStatus())

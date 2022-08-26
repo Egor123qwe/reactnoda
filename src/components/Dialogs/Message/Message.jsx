@@ -2,7 +2,7 @@ import s from './Message.module.css';
 import React from 'react';
 
 function isMyMessage(id) {
-    if (id === '1'){
+    if (id === 1){
         return s.MyMassage;
     }
     else {

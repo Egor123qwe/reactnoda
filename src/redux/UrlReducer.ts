@@ -1,9 +1,7 @@
 const SERUSERIDINURL = 'SERUSERIDINURL'
 
-export let SetUserIdInURL = (id) => {
-    let action = {type: SERUSERIDINURL, id}
-    return action
-}
+type SetUserIdInURLAction = { type: typeof SERUSERIDINURL, id: number }
+export let SetUserIdInURL = (id: number): SetUserIdInURLAction => ( {type: SERUSERIDINURL, id} )
 
 let initialState = {
     UserIdInURL: {
@@ -11,7 +9,10 @@ let initialState = {
     }
 }
 
-let UrlReducer = (state = initialState, action) => {
+type initialStateType = typeof initialState
+
+
+let UrlReducer = (state = initialState, action: any): initialStateType => {
     switch(action.type) {
         case SERUSERIDINURL: 
                 return {

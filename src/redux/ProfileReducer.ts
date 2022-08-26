@@ -7,71 +7,65 @@ const SETPRELOADER = 'SETPRELOADER';
 const SETSTAUS = 'SETSTAUS';
 const SETPROFILEIMAGE = 'SETPROFILEIMAGE';
 
-export const AddPost = (Post) => {
-    let action = {type: ADDPOST, Post}
-    return action
-}
+type AddPostAction = { type: typeof ADDPOST, Post: object }
+export const AddPost = (Post: object): AddPostAction => ({ type: ADDPOST, Post })
 
-export let SetProfileImage = (photos) => {
-    let action = {type: SETPROFILEIMAGE, photos}
-    return action
-}
+type SetProfileImageAction = { type: typeof SETPROFILEIMAGE, photos: object }
+export let SetProfileImage = (photos: object): SetProfileImageAction => ({ type: SETPROFILEIMAGE, photos })
 
-export let SetProfileInfo = (data) => {
-    let action = {type: SETPROFILEINFO, data: data}
-    return action
-}
+type SetProfileInfoAction = { type: typeof SETPROFILEINFO, data: object }
+export let SetProfileInfo = (data: object): SetProfileInfoAction => ({ type: SETPROFILEINFO, data: data })
 
-export let SetUserId = (UserId) => {
-    let action = {type: SETUSERID, UserId: UserId}
-    return action
-}
+type SetUserIdAction = { type: typeof SETUSERID, UserId: number }
+export let SetUserId = (UserId: number): SetUserIdAction => ( {type: SETUSERID, UserId: UserId} )
 
-export let SetPreloader = () => {
-    let action = {type: SETPRELOADER}
-    return action
-}
+type SetPreloaderAction = { type: typeof SETPRELOADER }
+export let SetPreloader = (): SetPreloaderAction => ( {type: SETPRELOADER} )
 
-export let SetStatus = (status) => {
-    let action = {type: SETSTAUS, status}
-    return action
-}
+type SetStatusAction = { type: typeof SETSTAUS, status: string }
+export let SetStatus = (status: string): SetStatusAction => ( {type: SETSTAUS, status} )
+
+
+type PostType = { text : string, id: number } //
+
+type initialStateType = typeof initialState
 
 let initialState = { 
 
-    PostsData : [
-        {text : 'это мой первый хиииит', id: '1'},
-        {text : 'подписчики я вас люблю!', id: '2'},
-        ],
+    PostsData: [
+        {text : 'это мой первый хиииит', id: 1},
+        {text : 'подписчики я вас люблю!', id: 2},
+        ] as Array <PostType>,
     ProfileInfoData: {
-        FullName: '',
-        status: '',
-        lookingForAJob: '',
-        lookingForAJobDescription: '',
-        AboutMe: '',
-        ProfilePhoto: '',
-        ImageFile: null,
-        SetPreloader: false,
+        Preloader: false as boolean,
+        FullName: null as null | string,
+        status: null as null | string,
+        lookingForAJob: null as null | string,
+        lookingForAJobDescription: null as null | string,
+        AboutMe: null as null | string,
+        ProfilePhoto: null as null | string,
+        SetPreloader: false as boolean,
         contacts: {
-            github:'',
-            vk: '',
-            facebook: '',
-            instagram: '',
-            twitter: '',
-            website: '',
-            youtube: '',
-            mainLink: '',
+            github: null as null | string,
+            vk: null as null | string,
+            facebook: null as null | string,
+            instagram: null as null | string,
+            twitter: null as null | string,
+            website: null as null | string,
+            youtube: null as null | string,
+            mainLink: null as null | string,
         }
     },
-    MyUserId: '13865',
-    UserId: '2'
+    MyUserId: null as number | null,
+    UserId: null as number | null
 }
 
-let ProfileReducer = (state = initialState, action) => {
+
+let ProfileReducer = (state = initialState, action: any): initialStateType => {
 
         switch(action.type) {
             case ADDPOST: 
-                let post = {text : action.Post, id: '3'}
+                let post = {text : action.Post, id: 3}
                 return {
                     ...state,
                     PostsData: [post, ...state.PostsData],
@@ -93,7 +87,6 @@ let ProfileReducer = (state = initialState, action) => {
                 }
             case SETPROFILEINFO: 
                 let photo = action.data.photos.large ? action.data.photos.large : 'https://i.pinimg.com/736x/18/ca/6f/18ca6f28ec97d6afb3117d4b6aece2e6.jpg'
-                console.log()
                 return {
                     ...state,
                     UserId: action.data.userId,
@@ -114,8 +107,8 @@ let ProfileReducer = (state = initialState, action) => {
         }
 }
 
-export let GetUserThunk = (UserId) => {
-    return ( (dispatch) => {
+export let GetUserThunk = (UserId: number) => {
+    return ( (dispatch: any) => {
         dispatch(SetPreloader())
         dispatch(SetUserId(UserId))
         ProfileAPI.GetUser(UserId)
@@ -126,8 +119,8 @@ export let GetUserThunk = (UserId) => {
     })
 }
 
-export let GetStatus = (UserId) => {
-    return ( (dispatch) => {
+export let GetStatus = (UserId: number) => {
+    return ( (dispatch: any) => {
         ProfileAPI.GetStatus(UserId)
             .then(response => {
                 dispatch(SetStatus(response.data))
@@ -135,8 +128,8 @@ export let GetStatus = (UserId) => {
     })
 }
 
-export let UpdateStatus = (status) => {
-    return ( (dispatch) => {
+export let UpdateStatus = (status: string) => {
+    return ( (dispatch: any) => {
         ProfileAPI.UpdateStatus(status)
             .then(response => {
                 if (response.data.resultCode === 0) {
@@ -146,16 +139,16 @@ export let UpdateStatus = (status) => {
     })
 }
 
-export let SetProfileImageThunk = (file) => {
-    return ( (dispatch) => {
+export let SetProfileImageThunk = (file: object) => {
+    return ( (dispatch: any) => {
         ProfileAPI.SetImage(file).then(response => {
             dispatch(SetProfileImage(response.data.data.photos))
         })
     })
 }
 
-export let SetProfileInfoThunk = (data, UserId, setStatus) => {
-    return ( (dispatch) => {
+export let SetProfileInfoThunk = (data: object, UserId: number, setStatus: (object: object) => object) => {
+    return ( (dispatch: any) => {
         return ProfileAPI.SetProfileInfo(data).then(response => {
             return new Promise((resolve) => {
                 if(response.data.resultCode === 0) {

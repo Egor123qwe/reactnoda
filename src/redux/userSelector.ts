@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
+import { AppStateType } from './redux-store';
 
-function getUsers(state) {
+function getUsers(state: AppStateType) {
     return state.UsersPage.UsersData
 }
 

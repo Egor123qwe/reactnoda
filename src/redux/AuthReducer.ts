@@ -4,33 +4,30 @@ const SETAUTH = 'SETAUTH'
 const DELETEAUTH = 'DELETEAUTH'
 const SETCAPTCHA = 'SETCAPTCHA'
 
-export let SetAuth = (data) => {
-    let action = {type: SETAUTH, data: data}
-    return action
-}
 
-export let DeleteAuth = () => {
-    let action = {type: DELETEAUTH}
-    return action
-}
+type SetAuthAction = { type: typeof SETAUTH, data: object }
+export let SetAuth = (data: object): SetAuthAction => ( {type: SETAUTH, data: data} )
 
-export let SetCaptcha = (Url) => {
-    let action = {type: SETCAPTCHA, Url}
-    return action
-}
+type DeleteAuthAction = { type: typeof DELETEAUTH }
+export let DeleteAuth = (): DeleteAuthAction => ( {type: DELETEAUTH} )
+
+type SetCaptchaAction = { type: typeof SETCAPTCHA, Url: string}
+export let SetCaptcha = (Url: string): SetCaptchaAction => ( {type: SETCAPTCHA, Url} )
+
+
+type initialStateType = typeof initialState
 
 let initialState = {
-
         Auth : {
-            id: '',
-            email: '',
-            login: '',
-            isAuth: false,
-            Captcha: ''
+            id: null as null | number,
+            email: '' as null | string,
+            login: '' as null | string,
+            isAuth: false as boolean,
+            Captcha: '' as string
         }
 }
 
-let DialogReducer = (state = initialState, action) => {
+let DialogReducer = (state = initialState, action: any): initialStateType => {
     switch(action.type) {
         case SETAUTH: 
             return {
@@ -40,7 +37,7 @@ let DialogReducer = (state = initialState, action) => {
         case DELETEAUTH: 
             return {
                 ...state,
-                Auth : {...state.Auth, id: '', email: '', login: '', Captcha: '', isAuth: false}
+                Auth : {...state.Auth, id: null, email: '', login: '', Captcha: '', isAuth: false}
             }
         case SETCAPTCHA: 
             return {
@@ -53,7 +50,7 @@ let DialogReducer = (state = initialState, action) => {
 }
 
 export let AuthMeThunk = () => {
-    return ( (dispatch) => {
+    return ( (dispatch: any) => {
         return AuthAPI.AuthMe()
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -63,8 +60,10 @@ export let AuthMeThunk = () => {
     })
 }
 
-export let AuthLoginThunk = (email, password, rememberMe, captcha, setStatus) => {
-    return ( (dispatch) => {
+
+
+export let AuthLoginThunk = (email: string, password: string, rememberMe: boolean, captcha: string, setStatus: (object: object) => object) => {
+    return ( (dispatch: any) => {
         AuthAPI.LoginMe(email, password, rememberMe, captcha)
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -81,7 +80,7 @@ export let AuthLoginThunk = (email, password, rememberMe, captcha, setStatus) =>
 }
 
 export let AuthLogOutThunk = () => {
-    return ( (dispatch) => {
+    return ( (dispatch: any) => {
         AuthAPI.LogOut()
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -92,7 +91,7 @@ export let AuthLogOutThunk = () => {
 }
 
 let GetCaptchaThunk = () => {
-    return ( (dispatch) => {
+    return ( (dispatch: any) => {
         SecurityAPI.GetCaptcha()
         .then(response => {
                 dispatch(SetCaptcha(response.data.url))
