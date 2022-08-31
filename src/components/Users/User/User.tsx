@@ -2,7 +2,26 @@ import s from './User.module.css'
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 
-function User(props) {
+
+type PropsType = {
+    OnToogleFollow: (UserId: number, followed: boolean) => void,
+    UserData: {
+        name: string | null,
+        id: number,
+        uniqueUrlName: null,
+        photos: {
+            small: string | null,
+            large: string | null
+        },
+        status: string | null,
+        followed: boolean,
+        location?: string
+    },
+    isDisable: false,
+    SetUserIdInURL: (id: number) => void
+}
+
+const User: React.FC<PropsType> = (props) => {
 
     let onClick = () => {
         props.OnToogleFollow(props.UserData.id, props.UserData.followed)

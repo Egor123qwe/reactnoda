@@ -1,4 +1,5 @@
 import { UsersAPI } from "../API/API";
+import { UserDataType } from "./TypesDiff";
 
 const TOGGLEFOLLOW = 'TOGGLEFOLLOW';
 const SETUSERS = 'SETUSERS';
@@ -32,19 +33,7 @@ export let EnableButton = (id: number): EnableButtonAction => ( {type: ENABLEBUT
 
 
 let initialState = {
-    UsersData: [
-        {
-            name: null as string | null,
-            id: null as number | null,
-            uniqueUrlName: null,
-            photos: {
-                small: null as string | null,
-                large: null as string | null
-            },
-            status: null as string | null,
-            followed: false as boolean
-        }
-    ],
+    UsersData: [] as Array<UserDataType>,
     UsersCountOnPage: 4,
     UsersCount: 1,
     ChoosingPage: 1,
@@ -62,7 +51,7 @@ let UsersReducer = (state = initialState, action: any): initialStateType => {
                 ...state,
                 UsersData: state.UsersData.map(u => {
                     if (u.id === action.id) {
-                        return { ...u, followed: u.followed ? false : true }
+                       return { ...u, followed: u.followed ? false : true }
                     }
                     return u
                 })

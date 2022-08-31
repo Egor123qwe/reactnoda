@@ -4,7 +4,7 @@ import MyPostConteiner from './MyPosts/MyPostConteiner';
 import React from 'react';
 
 
-function Profile(props) {
+function Profile() {
     return (
         <div className={s.profile}>
             <ProfileinfoContainer />

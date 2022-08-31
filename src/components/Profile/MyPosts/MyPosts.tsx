@@ -2,9 +2,15 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import React from 'react';
 import AddPostForm from './AddPostForm';
+import { initialStateTypeProfileReducer } from '../../../redux/ProfileReducer';
 
 
-function MyPosts(props) {
+type PropsType = {
+    AddPost: (post: string) => void,
+    ProfilePage: initialStateTypeProfileReducer
+}
+
+const MyPosts: React.FC <PropsType> = (props) => {
 
     let PostsElement = props.ProfilePage.PostsData.map( e => <Post text={e.text} id={e.id}/>)
 

@@ -4,11 +4,19 @@ import React from 'react';
 
 const CssClass = () => {
     return (
-        select => select.isActive ? s.active : s.item
+        (select: any) => {
+            return select.isActive ? s.active : s.item;
+        }
     );
 }
 
-function Navbar(props) {
+
+type PropsType = {
+    SetUserIdInURL: (UserId: number) => void,
+    UserId: number
+}
+
+const Navbar: React.FC<PropsType> = (props) => {
     return (
         <nav className={s.Navbar}>
             <div><NavLink onClick={ () => { props.SetUserIdInURL(props.UserId) } }  to={'/profile/' + props.UserId} className={CssClass()}>Profile</NavLink></div>

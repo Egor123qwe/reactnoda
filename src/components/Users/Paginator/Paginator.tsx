@@ -3,7 +3,14 @@ import PageItem from './PageItem';
 import { useState, useEffect } from "react";
 
 
-function Paginator(props) {
+type PropsType = {
+    ChoosingPage: number,
+    UsersCount: number,
+    UsersCountOnPage: number
+    OnChoosePage: (PageNumber: number) => void
+}
+
+const Paginator: React.FC<PropsType> = (props) => {
 
     let GeneralCount = Math.ceil(props.UsersCount/props.UsersCountOnPage)
 

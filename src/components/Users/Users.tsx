@@ -1,14 +1,26 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import User from "./User/User";
 import s from './Users.module.css'
 import Preloader from '../Common/Preloader/Preloader';
 import Paginator from './Paginator/Paginator';
+import { UserDataType } from "../../redux/TypesDiff";
 
+type PropsType = {
+    DisabledButtons: boolean,
+    UsersCount: number,
+    OnChoosePage: (PageMumber: number) => void,
+    UsersCountOnPage: number,
+    ChoosingPage: number,
+    SetPreloader: boolean,
+    UsersData: Array<UserDataType>,
+    SetUserIdInURL: (id: number) => void,
+    OnToogleFollow: (Userid: number, followed: boolean) => void
+}
 
-function Users(props) {
+const Users: React.FC <PropsType> = (props) => {
 
     let UsersElements = props.UsersData.map(e => {
-        let isDisable = props.DisabledButtons.indexOf(e.id) !== -1 ? true : false
+        let isDisable = false//props.DisabledButtons.indexOf(e.id) !== -1 ? true : false
         return <User SetUserIdInURL={props.SetUserIdInURL} isDisable={isDisable} OnToogleFollow={props.OnToogleFollow} UserData = {e}/>
     })
 

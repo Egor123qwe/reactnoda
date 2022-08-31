@@ -28,7 +28,33 @@ export let SetStatus = (status: string): SetStatusAction => ( {type: SETSTAUS, s
 
 type PostType = { text : string, id: number } //
 
-type initialStateType = typeof initialState
+export type initialStateTypeProfileReducer = typeof initialState
+
+
+let ProfileInfoData = {
+    Preloader: false as boolean,
+    FullName: null as null | string,
+    status: null as null | string,
+    lookingForAJob: null as null | string,
+    lookingForAJobDescription: null as null | string,
+    AboutMe: null as null | string,
+    ProfilePhoto: null as null | string,
+    SetPreloader: false as boolean,
+    contacts: {
+        github: null as null | string,
+        vk: null as null | string,
+        facebook: null as null | string,
+        instagram: null as null | string,
+        twitter: null as null | string,
+        website: null as null | string,
+        youtube: null as null | string,
+        mainLink: null as null | string,
+    }
+}
+
+export type ProfileInfoDataType = typeof ProfileInfoData
+
+
 
 let initialState = { 
 
@@ -36,32 +62,13 @@ let initialState = {
         {text : 'это мой первый хиииит', id: 1},
         {text : 'подписчики я вас люблю!', id: 2},
         ] as Array <PostType>,
-    ProfileInfoData: {
-        Preloader: false as boolean,
-        FullName: null as null | string,
-        status: null as null | string,
-        lookingForAJob: null as null | string,
-        lookingForAJobDescription: null as null | string,
-        AboutMe: null as null | string,
-        ProfilePhoto: null as null | string,
-        SetPreloader: false as boolean,
-        contacts: {
-            github: null as null | string,
-            vk: null as null | string,
-            facebook: null as null | string,
-            instagram: null as null | string,
-            twitter: null as null | string,
-            website: null as null | string,
-            youtube: null as null | string,
-            mainLink: null as null | string,
-        }
-    },
+    ProfileInfoData: ProfileInfoData,
     MyUserId: null as number | null,
     UserId: null as number | null
 }
 
 
-let ProfileReducer = (state = initialState, action: any): initialStateType => {
+let ProfileReducer = (state = initialState, action: any): initialStateTypeProfileReducer => {
 
         switch(action.type) {
             case ADDPOST: 

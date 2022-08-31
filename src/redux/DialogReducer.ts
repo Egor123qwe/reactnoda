@@ -1,13 +1,11 @@
+import { DialogItemType, MessageType } from "./TypesDiff"
+
 const SENDMESSAGE = 'Dialogs/SENDMESSAGE'
 
 type SendMessageActionType = { type: typeof SENDMESSAGE, Message: string }
 export const SendMessage = (Message: string): SendMessageActionType => ( { type: SENDMESSAGE, Message } )
 
-type DialogItemType = { NickName: string, id: number } //
-type MessageType = { message : string, id : number } //
-
-
-type initialStateType = typeof initialState
+export type initialStateTypeDialogReducer = typeof initialState
 
 let initialState = {
         DialogItemData : [
@@ -24,7 +22,7 @@ let initialState = {
         ] as Array <MessageType>
 }
 
-let DialogReducer = (state = initialState, action: any): initialStateType => {
+let DialogReducer = (state = initialState, action: any): initialStateTypeDialogReducer => {
 
     switch(action.type) {
         case SENDMESSAGE: 
